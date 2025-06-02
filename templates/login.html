@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="login">
+        <form action="{{ url_for('auth.login') }}" method="post">
+            <img id="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"
+            width="80vh">
+            <h2 style="text-align: center;">
+                Welcome Back to PARKSY !<br>
+                We're glad to see you again.<br>
+                <p style="margin: 20px; font-weight: normal;">Please log in to continue exploring our community.</p>
+            </h2>
+
+
+            <div class="form_content" style="display: flex; flex-wrap: wrap;">
+                <div class="form_group" style="padding: 1vh;">
+                    <label for="username">
+                        <h4 style="display: inline;">Username:</h4>
+                    </label>
+                    <input required type="text" name="username" id="username">
+                </div>
+                <div class="form_group" style="padding: 1vh;">
+                    <label for="password">
+                        <h4 style="display: inline;">Password:</h4>
+                    </label>
+                    <input required type="password" name="password" id="password">
+                </div>
+                <div style="width: 100%; display: flex; justify-content: center; margin-top: 1vh;">
+                    <button type="submit" style="width: 80%; height: fit-content;">Login</button>
+                </div>
+            </div>
+        </form>
+
+        <div
+            style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 5vh;">
+            <h4 style="margin: 0;">Don't have an Account?</h4>
+            <a href="{{ url_for('auth.register') }}" style="text-decoration: none; font-weight: bold;">Register</a>
+        </div>
+    </div>
+    <div class="photo">
+        <img id="theme_photo" src="{{ url_for('static', filename='images/car_1.png') }}" alt="A Student"
+            width="120%" height="fit-content" />
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_body %}
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,101 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    margin: 2%;
+    flex-wrap: wrap-reverse;
+    height: 80vh;
+    color: #34495e;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+.container>* {
+    min-width: 150px;
+    margin: 5px;
+    height: 100%;
+}
+
+.login {
+    flex: 3;
+    padding: 5vh;
+    background-color: aliceblue;
+    display: flex;
+    height: 60vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.form_content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form_group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form_group label {
+    width: 40%;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.form_group input[type="text"],
+.form_group input[type="password"] {
+    flex: 1;
+    padding: 10px;
+    background-color: transparent;
+    color: #2c3e50;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form_group input[type="text"]:focus,
+.form_group input[type="password"]:focus {
+    border-color: #4facfe;
+    box-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
+    outline: none;
+}
+
+
+.photo {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo #theme_photo {
+    align-items: center;
+    padding-top: 10%;
+    opacity: 1;
+    transition: transform 2s ease, opacity 2s ease;
+    z-index: 0;
+}
+
+.photo #theme_photo:hover {
+    transform: translateX(-90%);
+    opacity: 0;
+}
+#logo{
+    position: relative;
+    left: 20px;
+    top: 20px;
+}
+button {
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+}

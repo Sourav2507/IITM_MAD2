@@ -1,0 +1,3 @@
+flask db migrate  /  flask db migrate -m "description of changes"
+
+flask db upgrade

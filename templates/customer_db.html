@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/customer_db.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1>Hello This is Customer Dashboard</h1>
+{% endblock %}
+
+{% block extra_body %}
+<script src="{{ url_for('static', filename='js/customer_db.js') }}"></script>
+{% endblock %}

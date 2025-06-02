@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="photo">
+        <img id="theme_photo" src="{{ url_for('static', filename='images/car_2.png') }}" alt="A Student" width="120%" height="fit-content" />
+    </div>
+    <div class="register">
+        <form action="{{ url_for('auth.register') }}" method="post">
+            <img id="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" width="80vh"/>
+            <div class="heading">
+                <h2 style="text-align: center;" >
+                    Welcome to PARKSY ! <br>
+                    We're excited to have you join our community.<br>
+                    <p style="margin: 20px; font-weight: normal;">Please fill in your details to create your account.
+                    </p>
+                </h2>
+            </div>
+
+            <div class="form_content" style="display: flex; flex-wrap: wrap;">
+                <div class="left" style="flex: 1; min-width: 300px;">
+
+                    <div class="form_group" style="padding: 1vh;">
+                        <label for="username">
+                            <h4 style="display: inline;">Username:</h4>
+                        </label>
+                        <input required type="text" name="username" id="username">
+                    </div>
+                    <div class="form_group" style="padding: 1vh;">
+                        <label for="password">
+                            <h4 style="display: inline;">Password:</h4>
+                        </label>
+                        <input required type="password" name="password" id="password">
+                    </div>
+                    <div class="form_group" style="padding: 1vh;">
+                        <label for="confirm_password">
+                            <h4 style="display: inline;">Confirm Password:</h4>
+                        </label>
+                        <input required type="password" name="confirm_password" id="confirm_password">
+                    </div>
+                    <div class="form_group" style="padding: 1vh;">
+                        <label for="fname">
+                            <h4 style="display: inline;">First Name:</h4>
+                        </label>
+                        <input required type="text" name="fname" id="fname">
+                    </div>
+                    <div class="form_group" style="padding: 1vh;">
+                        <label for="lname">
+                            <h4 style="display: inline;">Last Name:</h4>
+                        </label>
+                        <input required type="text" name="lname" id="lname">
+                    </div>
+                    <div class="form_group" style="padding: 1vh;">
+                        <label for="email">
+                            <h4 style="display: inline;">Email ID:</h4>
+                        </label>
+                        <input required type="email" name="email" id="email">
+                    </div>
+                </div>
+
+                <div class="right" style="flex: 1; min-width: 300px;">
+                    <div class="form_group" style="padding: 1vh;">
+                        <label for="ph_no">
+                            <h4 required style="display: inline;">Phone Number:</h4>
+                        </label>
+                        <input type="number" name="ph_no" id="ph_no">
+                    </div>
+                    <div class="form_group" style="padding: 1vh;">
+                        <label for="age">
+                            <h4 style="display: inline;">Age:</h4>
+                        </label>
+                        <input required type="number" name="age" id="age" min="18">
+                    </div>
+                    <div class="form_group">
+                        <label>Gender:</label>
+                        <div required class="gender_group">
+                            <label><input type="radio" name="gender" value="Male"> Male</label>
+                            <label><input type="radio" name="gender" value="Female"> Female</label>
+                            <label><input type="radio" name="gender" value="Other"> Other</label>
+                        </div>
+                    </div>
+                    <div class="form_group" style="padding: 1vh;">
+                        <label for="reg_no">
+                            <h4 style="display: inline;">Car Reg. No.:</h4>
+                        </label>
+                        <input required type="text" name="reg_no" id="reg_no">
+                    </div>
+                    <div class="form_group" style="padding: 1vh;">
+                        <label for="city">
+                            <h4 style="display: inline;">City :</h4>
+                        </label>
+                        <input required type="text" name="city" id="city">
+                    </div>
+                    <div class="form_group" style="padding: 1vh;">
+                        <label for="state">
+                            <h4 style="display: inline;">State :</h4>
+                        </label>
+                        <input required type="text" name="state" id="state">
+                    </div>
+                </div>
+                <div style="width: 100%; display: flex; justify-content: center; margin-top: 1vh;">
+                    <button type="submit" style="width: 80%; height:  fit-content;">Register</button>
+                </div>
+            </div>
+
+        </form>
+        <div
+            style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 5vh;">
+            <h4 style="margin: 0;">Already have an Account?</h4>
+            <a href="{{ url_for('auth.login') }}" style="text-decoration: none; font-weight: bold;">Login</a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_body %}
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+{% endblock %}

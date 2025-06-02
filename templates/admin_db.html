@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_db.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="heading">
+        <img id="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+        <h1>Welcome to PARKSKY's Admin Dashboard</h1>
+    </div>
+    <ul class="navbar">
+        <li><a href="#">
+                <h4>Overview</h4>
+            </a></li>
+        <li><a href="#">
+                <h4>Control Panel</h4>
+            </a></li>
+        <li><a href="#">
+                <h4>Revenue</h4>
+            </a></li>
+        <li><a href="#">
+                <h4>Queries</h4>
+            </a></li>
+        <li><a href="#">
+                <h4>Logout</h4>
+            </a></li>
+    </ul>
+
+</div>
+{% endblock %}
+
+{% block extra_body %}
+<script src="{{ url_for('static', filename='js/admin_db.js') }}"></script>
+{% endblock %}
