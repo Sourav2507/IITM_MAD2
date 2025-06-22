@@ -8,4 +8,17 @@ user = Blueprint('user', __name__)
 def user_db():
     print(session)
     user = User.query.filter_by(username=session['username']).first()
-    return render_template('customer_db.html',User1=user)
+    return render_template('customer_db.html')
+
+@user.route('/find_parking')
+def find_parking():
+    return render_template('find_parking.html')
+
+@user.route('/bookings')
+def bookings():
+    return render_template('find_parking.html')
+
+@user.route('/about')
+def about():
+    return render_template('find_parking.html')
+
