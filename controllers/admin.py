@@ -4,4 +4,7 @@ admin = Blueprint('admin', __name__)
 
 @admin.route('/admin')
 def admin_db():
-    return render_template('admin_db.html')
+    if 'role' in session:
+        if session['role']=='admin':
+            return render_template('admin_db.html')
+    return redirect(url_for('auth.login'))

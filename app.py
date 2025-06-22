@@ -22,7 +22,7 @@ app.register_blueprint(user)
 
 @app.route('/')
 def home():
-    return redirect(url_for('auth.login'))
+    return render_template('landing.html')
 
 def create_admin():
     admin = User.query.filter_by(role='admin').first()
