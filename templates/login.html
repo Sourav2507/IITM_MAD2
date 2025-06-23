@@ -2,11 +2,11 @@
 
 {% block title %}Login{% endblock %}
 
-{% block extra_head %}
+{% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
 
-{% block content %}
+{% block body %}
 <div class="login-container">
     <!-- Left Side (Image) -->
     <div class="login-left">
@@ -41,8 +41,7 @@
         </form>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_body %}
+<!-- Optional JS -->
 <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 {% endblock %}

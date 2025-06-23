@@ -1,0 +1,47 @@
+{% extends "customer.html" %}
+
+{% block title %}My Bookings - PARKSY{% endblock %}
+
+{% block content %}
+<div class="px-40 flex flex-1 justify-center py-5">
+  <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+    <div class="flex flex-wrap justify-between gap-3 p-4">
+      <p class="text-[#0e171b] text-[32px] font-bold leading-tight min-w-72">My Bookings</p>
+    </div>
+    <div class="pb-3">
+      <div class="flex border-b border-[#d0e0e7] px-4 gap-8">
+        <a class="border-b-[3px] border-b-[#18ace6] text-[#0e171b] pb-[13px] pt-4 text-sm font-bold" href="#">Upcoming</a>
+        <a class="border-b-[3px] border-b-transparent text-[#4e8397] pb-[13px] pt-4 text-sm font-bold" href="#">Past</a>
+      </div>
+    </div>
+
+    <div class="px-4 py-3 @container">
+      <div class="flex overflow-hidden rounded-xl border border-[#d0e0e7] bg-[#f8fbfc]">
+        <table class="flex-1">
+          <thead>
+            <tr class="text-sm font-medium text-[#0e171b] bg-[#f8fbfc]">
+              <th class="px-4 py-3 w-[400px]">Booking ID</th>
+              <th class="px-4 py-3 w-[400px]">Location</th>
+              <th class="px-4 py-3 w-[400px]">Date & Time</th>
+              <th class="px-4 py-3 w-60">Status</th>
+              <th class="px-4 py-3 w-60 text-[#4e8397]">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Example row -->
+            <tr class="border-t border-[#d0e0e7]">
+              <td class="px-4 py-2 text-[#4e8397]">#123456</td>
+              <td class="px-4 py-2 text-[#4e8397]">City Center Garage</td>
+              <td class="px-4 py-2 text-[#4e8397]">Oct 26, 2024, 10:00 AM - 12:00 PM</td>
+              <td class="px-4 py-2">
+                <button class="w-full h-8 px-4 rounded-full bg-[#e7f0f3] text-sm font-medium text-[#0e171b]">Confirmed</button>
+              </td>
+              <td class="px-4 py-2 text-sm font-bold text-[#4e8397]">Edit | Cancel | Download Receipt</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

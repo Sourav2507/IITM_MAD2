@@ -16,9 +16,21 @@ def find_parking():
 
 @user.route('/bookings')
 def bookings():
-    return render_template('find_parking.html')
+    return render_template('bookings.html')
 
-@user.route('/about')
-def about():
-    return render_template('find_parking.html')
+@user.route('/payments')
+def payments():
+    return render_template('payments.html')
+
+@user.route('/help_and_support')
+def help_and_support():
+    return render_template('help_and_support.html')
+
+@user.route('/notifications')
+def notifications():
+    return render_template('notifications.html')
+
+@user.route('/profile')
+def profile():
+    return render_template('profile.html')
 

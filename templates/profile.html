@@ -1,0 +1,68 @@
+{% extends "customer.html" %}
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center py-10">
+      <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-4xl">
+        <!-- Profile Info -->
+        <div class="text-center">
+          <div class="mx-auto rounded-full w-32 h-32 bg-cover bg-center"
+            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjHgDNX9k_Y6hIprjFtDuMDUe_w-eSt28gGF56KosRXvsJ6okm3d3cBZ2Dnm9noPEGbjdAkFd2ipDltzGxRhCWFadlTtfQLr_xrNkFhhuO22Z0Thc0-hYB5b2oi9fuYrcFrkwbtAz_nLIkUfzU1Sd7MfT4J4xS5n8uVBoX5TJXh7vOy4k53QiyQctZk6badP8shPhnomsnx09u2FQM8i-H70d_SAz8V_htRJ8yzuWRa4uD4mn-1JJ00tQ6ASDWs6CKuLwKse0W0sCl');">
+          </div>
+          <h2 class="text-xl font-bold mt-4" id="nameDisplay">Sophia Carter</h2>
+          <p class="text-gray-500" id="roleDisplay">Parking Manager</p>
+          <p class="text-sm text-gray-400 mt-1" id="emailDisplay">sophia.carter@email.com</p>
+        </div>
+
+        <!-- Static Details -->
+        <div id="detailSection" class="mt-6 space-y-2">
+          <p><span class="font-semibold">Full Name:</span> Sophia Carter</p>
+          <p><span class="font-semibold">Phone Number:</span> 9876543210</p>
+          <p><span class="font-semibold">Age:</span> 30</p>
+          <p><span class="font-semibold">Gender:</span> Female</p>
+          <p><span class="font-semibold">Car Reg. No:</span> TR01AB1234</p>
+          <p><span class="font-semibold">Address:</span> Agartala, Tripura</p>
+        </div>
+
+        <div class="flex justify-center mt-6">
+          <button onclick="toggleEdit(true)" id="editBtn"
+            class="bg-[#e7f0f3] text-[#0e181b] font-semibold py-2 px-6 rounded-full">
+            Edit Details
+          </button>
+        </div>
+
+        <!-- Edit Form (Initially Hidden) -->
+        <form id="editForm" class="hidden mt-6 space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <input type="text" name="fname" placeholder="First Name" value="Sophia" class="form-input rounded-xl">
+            <input type="text" name="lname" placeholder="Last Name" value="Carter" class="form-input rounded-xl">
+            <input type="text" name="phone" placeholder="Phone" value="9876543210" class="form-input rounded-xl">
+            <input type="number" name="age" placeholder="Age" value="30" class="form-input rounded-xl">
+            <input type="text" name="gender" placeholder="Gender" value="Female" class="form-input rounded-xl">
+            <input type="text" name="reg_no" placeholder="Car Reg No" value="TR01AB1234" class="form-input rounded-xl">
+            <input type="text" name="address" placeholder="Address" value="Agartala, Tripura" class="form-input rounded-xl">
+          </div>
+
+          <div class="flex justify-end">
+            <button type="submit" class="bg-[#17ace2] text-white font-semibold py-2 px-6 rounded-full">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function toggleEdit(showForm) {
+        const form = document.getElementById("editForm");
+        const details = document.getElementById("detailSection");
+        const editBtn = document.getElementById("editBtn");
+
+        if (showForm) {
+          form.classList.remove("hidden");
+          details.classList.add("hidden");
+          editBtn.classList.add("hidden");
+        }
+      }
+    </script>
+{% endblock %}
