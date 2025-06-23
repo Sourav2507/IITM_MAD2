@@ -1,0 +1,82 @@
+{% extends "admin.html" %}
+
+{% block admin_content %}
+<div class="px-40 flex flex-1 justify-center py-5">
+  <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+    <div class="flex flex-wrap justify-between gap-3 p-4">
+      <p class="text-[#101719] tracking-light text-[32px] font-bold leading-tight min-w-72">Reports</p>
+    </div>
+
+    <!-- First Row: Graphs -->
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+      <div class="flex flex-col gap-3 pb-3">
+        <div
+          class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCSHHFZjaAeWdouGxO2zn13XwxDy5fEUTgHoIzppPpoRY_batTkg18TaXq3BUJX8v-XPpf-8ovDILOR8OQuSu6IDPgXs9pf5FnMhokz5Px6m2mnYQhERNa6G7GXUdKDfwzKR_pLejjJlpVUTN4JN_QjIhAVlpv2GNa4fgK8Uh7hvINJPFP0QMGPrII8gTYXvvjXElAl73uRVOAQvn9oOkc164bMPxwbg-PucbpW-OaEOwX_-OXlpOLdWNhzqGSejB7xotwz6lVjcSDD");'
+        ></div>
+        <p class="text-[#101719] text-base font-medium leading-normal">Bookings Over Time</p>
+      </div>
+      <div class="flex flex-col gap-3 pb-3">
+        <div
+          class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDbgAqQm-vQlBtPvLPdv2l5Y8q0xlMPK79DsjN6PhInLRXe_TeJLXx88fyYewyQDI1mQBi0Vcc0-HCsPb8CoaqUzx4Hvqy_C0Xffd5eYpAun2PwcQ0nGikLGRzoeXS2MOozIbyJFg4BZku_IqaSscxD9qkDCJQedEPFUogz3PYWZ8Th_CgljhUKU0xPagvU7eaS1gZl64OgZRmxhDKs91jeYDJ8-G7dh25kK-8DcGMr7mbpO5CyoxbxYYgCS1kDW3akCA_pUUIdUJv9");'
+        ></div>
+        <p class="text-[#101719] text-base font-medium leading-normal">Bookings by Slot</p>
+      </div>
+    </div>
+
+    <!-- Analytics Table -->
+    <div class="px-4 py-3 @container">
+      <div class="flex overflow-hidden rounded-xl border border-[#d3dfe4] bg-gray-50">
+        <table class="flex-1">
+          <thead>
+            <tr class="bg-gray-50">
+              <th class="px-4 py-3 text-left text-[#101719] w-[400px] text-sm font-medium">Date</th>
+              <th class="px-4 py-3 text-left text-[#101719] w-[400px] text-sm font-medium">Bookings</th>
+              <th class="px-4 py-3 text-left text-[#101719] w-[400px] text-sm font-medium">Revenue</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for entry in data %}
+            <tr class="border-t border-[#d3dfe4]">
+              <td class="h-[72px] px-4 py-2 text-sm text-[#101719]">{{ entry.date }}</td>
+              <td class="h-[72px] px-4 py-2 text-sm text-[#587f8d]">{{ entry.bookings }}</td>
+              <td class="h-[72px] px-4 py-2 text-sm text-[#587f8d]">${{ entry.revenue }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Moved Graph Below Table -->
+    <div class="p-4">
+      <div class="flex flex-col gap-3 pb-3">
+        <div
+          class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAQxzOyYJSjThwFYzqlMnP1jWxcsv662ioF0IBWuvRKDNnXK9zKdt_v-1-SaH1QwbL4YIP0c8xZNBUI38Z1vgSRvv_lmsIT8QF5o_LXe--DHwTog1SryU-bN7mGjbypzNHKXCMXD2yLNaRQvIOADZhrU_A6IUxnix6MUzyl6mWKrnhpfcT7adT22iLvpkx0St0z6xp0KcJi5T8Fa-lqETxBWPmqMLI9NbcwRHsfKs6TQjJt5K9e_PpDyc1VuIBFBmS_j_VwMQ2EI-TB");'
+        ></div>
+        <p class="text-[#101719] text-base font-medium leading-normal">Revenue by Customer Segment</p>
+      </div>
+    </div>
+
+    <!-- Final Row: Remaining Cards -->
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-6 px-6 pb-6 pt-3">
+      <div class="flex flex-col gap-3 bg-white p-3 rounded-xl shadow-sm">
+        <div
+          class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCKJQlIpVd-rzkyxMweoEgXqVwXqJmao929m5IH_km3onpYjidMxpMFJ-ojSNJ2p0_9ahD4aabWo9D-5ZKg6I0_Sg7r3BPriKXn-vjafS6-nckdbHGRlS8iDPR_wVVj6NYh9FuQHBo48xuRAjdjyaipzoIx_1XEcB2SlbUz5gUnPFLo6YvnohTdYp5K8Ap-8Sr-wS3SErKt6nV_8uhjtEDv9F6WFmzw8yWMQvQW0uxkv2M7clacF_sg-ZuzPeqdIpsI5LX0Y8-7pbQO");'
+        ></div>
+        <p class="text-[#101719] text-base font-medium leading-normal">Revenue by Product</p>
+      </div>
+      <div class="flex flex-col gap-3 bg-white p-3 rounded-xl shadow-sm">
+        <div
+          class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+          style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAhYIbBOuciSxBRFQKKLsGON38Oz1mEOLmnSeTi7eOqPSBPXtCXMWqJ6H8Bo3aWldC2dzYB7V1hbqiLa23MZ_iTmkDKeCzNMZLKlM3msOpc4k_zQkOjt921IJzx_NTCc_4PU5Rdg-CB5cEqAkSABVQxXVeRMRQzzy7gOfkGtAILOAtqkKgB2qvEM5Y3ae8l-SnwZLyDEly6-15BFSbtZ-SnBKChRaPokeV1T6v3ThBgXzU0RcE-HixLOt5VxISSnJE7___BV_igjtxV");'
+        ></div>
+        <p class="text-[#101719] text-base font-medium leading-normal">Revenue by Region</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

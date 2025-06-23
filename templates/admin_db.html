@@ -1,36 +1,98 @@
-{% extends "base.html" %}
+{% extends "admin.html" %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_db.css') }}">
-{% endblock %}
-
-{% block body %}
-<div class="container">
-    <div class="heading">
-        <img id="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
-        <h1>Welcome to PARKSY's Admin Dashboard</h1>
-    </div>
-    <ul class="navbar">
-        <li><a href="#">
-                <h4>Overview</h4>
-            </a></li>
-        <li><a href="#">
-                <h4>Control Panel</h4>
-            </a></li>
-        <li><a href="#">
-                <h4>Revenue</h4>
-            </a></li>
-        <li><a href="#">
-                <h4>Queries</h4>
-            </a></li>
-        <li><a href="#">
-                <h4>Logout</h4>
-            </a></li>
-    </ul>
-
+{% block admin_content %}
+<div class="flex flex-wrap justify-between gap-3 p-4">
+  <div class="flex min-w-72 flex-col gap-3">
+    <p class="text-[#0d181b] tracking-light text-[32px] font-bold leading-tight">Dashboard</p>
+    <p class="text-[#4c859a] text-sm font-normal leading-normal">Welcome Admin</p>
+  </div>
 </div>
-{% endblock %}
 
-{% block extra_body %}
-<script src="{{ url_for('static', filename='js/admin_db.js') }}"></script>
+<!-- Cards Section -->
+<div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+  <!-- Card 1 -->
+  <div class="flex flex-col gap-3 pb-3">
+    <div class="w-full aspect-square bg-cover bg-center rounded-xl" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC1sMo24yqRfm7tuBzpkqEFsrrpPqlFaZOVzkFo1huYYiyeZhED923SRi8zW4xmWKmQqot-fJUA6hNV_TbdGJ8Gja2VSBMehXn8jpptyqAF2DzONYz8x34_zFR08DRh5o04L8fHRcy-Naq1FJNQc7w3McrBuBST2IPAPbsDt2LoBva14djW-6RwAU2nF1aW0I_1N_UJc8vVhEVaSFua__tWNb9kY3LkF08cb5RpdR0A97HJoe7Men9bFEmYyWkzmVHdhxrujgngul6w');"></div>
+    <div>
+      <p class="text-[#0d181b] text-base font-medium">Total Users</p>
+      <p class="text-[#4c859a] text-sm font-normal">1,250</p>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="flex flex-col gap-3 pb-3">
+    <div class="w-full aspect-square bg-cover bg-center rounded-xl" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_mZHbCisCF2zDqPkrqMyQ_tP36H3u-PlG0a245c9hBRL9ErTeKdy3YvsAU-3Pdz9e-hszShYx5eebgsdGq3jqqDCKSI4eY9szPkWowKso0nnestqjYpJLYXYFJu51j-heduDw7tiPoa5qImiJyCpmew9_QtMjafHdBqUUWfWJSSbvxqMlM82PlYMn-A9rtxFBRAbPYPJXB3icKG03L0LPOkPKr6GNrX_QoSt0QulzjaKSDtjaGUMMGxfx1XQUw1SE5sfNLmI8W4Nw');"></div>
+    <div>
+      <p class="text-[#0d181b] text-base font-medium">Total Bookings</p>
+      <p class="text-[#4c859a] text-sm font-normal">3,450</p>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="flex flex-col gap-3 pb-3">
+    <div class="w-full aspect-square bg-cover bg-center rounded-xl" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_NFliu6wfGH4PeUXVzevqecg6xAw08CygFzAW0_piqLAnfD35eJ8hryOvXchn3DWXUByDwqrdO7x2ejeIfVYzARUvB1wFpLL56T8xsa0dFhN-XnCHkM6c9KV2Dk2L9VF8JkP4xlSnPk3K3kInQUpV90QVZjDXvjDrQaNRQZYB2hvo1ZHxLu2ci952a-SFTqgNiRVhp4_TXFRW5veMCJXiBH7_hogtjuc_MRmDxk7wH_zTcRKpX_mhq1a4oSHWEJYztS47dqEkTlu4');"></div>
+    <div>
+      <p class="text-[#0d181b] text-base font-medium">Active Parkings</p>
+      <p class="text-[#4c859a] text-sm font-normal">150</p>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="flex flex-col gap-3 pb-3">
+    <div class="w-full aspect-square bg-cover bg-center rounded-xl" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA5NDoDtIQ-ncNnYyLPbEvNn1a95wJy4sCTBtZDqB3M5yfF3aiFmVuoVHGtQjiduUAXYGhXwaif9JEhTt7F9IGQT2QiIaIzXffCN-JiwcBjCc6WWfyaLE-ZxUMze8A_YGKzX_LkvzjFRyr1bCRcTvC1fSFi2_pR9iaq8KfK4MAS36so0CH70YvO--mINUZ2FwMgBC2bHrRmKV6WrV0wSBd_a9jN9rmtK2sv9IGH1pfNeShok9zjVkw0FVhWk-ME82xozXlbE1R2VLKV');"></div>
+    <div>
+      <p class="text-[#0d181b] text-base font-medium">Total Revenue</p>
+      <p class="text-[#4c859a] text-sm font-normal">$15,000</p>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Activities Section -->
+<h2 class="text-[#0d181b] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Recent Activities</h2>
+<div class="px-4 py-3 @container">
+  <div class="flex overflow-hidden rounded-xl border border-[#cfe1e7] bg-[#f8fbfc]">
+    <table class="flex-1">
+      <thead>
+        <tr class="bg-[#f8fbfc]">
+          <th class="table-col-120 px-4 py-3 text-left text-[#0d181b] w-[400px] text-sm font-medium leading-normal">User</th>
+          <th class="table-col-240 px-4 py-3 text-left text-[#0d181b] w-[400px] text-sm font-medium leading-normal">Activity</th>
+          <th class="table-col-360 px-4 py-3 text-left text-[#0d181b] w-[400px] text-sm font-medium leading-normal">Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-t border-t-[#cfe1e7]">
+          <td class="px-4 py-2 text-sm text-[#0d181b]">Ethan Harper</td>
+          <td class="px-4 py-2 text-sm text-[#4c859a]">Booked parking spot #123</td>
+          <td class="px-4 py-2 text-sm text-[#4c859a]">2024-07-26 10:00 AM</td>
+        </tr>
+        <tr class="border-t border-t-[#cfe1e7]">
+          <td class="px-4 py-2 text-sm text-[#0d181b]">Olivia Bennett</td>
+          <td class="px-4 py-2 text-sm text-[#4c859a]">Cancelled booking for spot #456</td>
+          <td class="px-4 py-2 text-sm text-[#4c859a]">2024-07-26 11:30 AM</td>
+        </tr>
+        <tr class="border-t border-t-[#cfe1e7]">
+          <td class="px-4 py-2 text-sm text-[#0d181b]">Noah Carter</td>
+          <td class="px-4 py-2 text-sm text-[#4c859a]">Updated parking spot #789 details</td>
+          <td class="px-4 py-2 text-sm text-[#4c859a]">2024-07-26 12:45 PM</td>
+        </tr>
+        <tr class="border-t border-t-[#cfe1e7]">
+          <td class="px-4 py-2 text-sm text-[#0d181b]">Ava Mitchell</td>
+          <td class="px-4 py-2 text-sm text-[#4c859a]">Added new parking spot #101</td>
+          <td class="px-4 py-2 text-sm text-[#4c859a]">2024-07-26 02:15 PM</td>
+        </tr>
+        <tr class="border-t border-t-[#cfe1e7]">
+          <td class="px-4 py-2 text-sm text-[#0d181b]">Liam Foster</td>
+          <td class="px-4 py-2 text-sm text-[#4c859a]">Viewed booking history for spot #222</td>
+          <td class="px-4 py-2 text-sm text-[#4c859a]">2024-07-26 03:30 PM</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <style>
+    @container(max-width:120px){.table-col-120{display: none;}}
+    @container(max-width:240px){.table-col-240{display: none;}}
+    @container(max-width:360px){.table-col-360{display: none;}}
+  </style>
+</div>
 {% endblock %}

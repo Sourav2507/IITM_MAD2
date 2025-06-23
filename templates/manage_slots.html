@@ -1,0 +1,75 @@
+{% extends "admin.html" %}
+
+{% block admin_content %}
+<div class="px-40 flex flex-1 justify-center py-5">
+  <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+    <div class="flex flex-wrap justify-between gap-3 p-4">
+      <p class="text-[#101719] tracking-light text-[32px] font-bold leading-tight min-w-72">Parking Slots</p>
+      <a href="{{ url_for('admin.add_slot') }}">
+        <button
+          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-8 px-4 bg-[#e7f0f3] text-[#101719] text-sm font-medium leading-normal">
+          <span class="truncate">Add New Slot</span>
+        </button>
+      </a>
+
+    </div>
+
+    <div class="px-4 py-3 @container">
+      <div class="flex overflow-hidden rounded-xl border border-[#d3dfe4] bg-gray-50">
+        <table class="flex-1">
+          <thead>
+            <tr class="bg-gray-50">
+              <th class="col-slot-id px-4 py-3 text-left text-[#101719] text-sm font-medium">Slot ID</th>
+              <th class="col-location px-4 py-3 text-left text-[#101719] text-sm font-medium">Location</th>
+              <th class="col-availability px-4 py-3 text-left text-[#101719] text-sm font-medium">Availability</th>
+              <th class="col-actions px-4 py-3 text-left text-[#101719] text-[#587f8d] text-sm font-medium">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in range(1, 6) %}
+            <tr class="border-t border-[#d3dfe4]">
+              <td class="col-slot-id h-[72px] px-4 py-2 text-[#101719] text-sm">#00{{ i }}</td>
+              <td class="col-location h-[72px] px-4 py-2 text-[#587f8d] text-sm">
+                {{ ['Main Entrance', 'Level 1, Section A', 'Level 2, Section B', 'Basement, Section C', 'Roof Top'][i -
+                1] }}
+              </td>
+              <td class="col-availability h-[72px] px-4 py-2 text-center text-sm">
+                <input type="checkbox"
+                  class="h-5 w-5 rounded border-[#d3dfe4] border-2 bg-transparent text-[#bee1ee] checked:bg-[#bee1ee] checked:border-[#bee1ee] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#d3dfe4] focus:outline-none" />
+              </td>
+              <td class="col-actions h-[72px] px-4 py-2 text-[#587f8d] text-sm font-bold">Edit | Delete</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <style>
+        @container (max-width: 500px) {
+          .col-slot-id {
+            display: none;
+          }
+        }
+
+        @container (max-width: 450px) {
+          .col-location {
+            display: none;
+          }
+        }
+
+        @container (max-width: 400px) {
+          .col-availability {
+            display: none;
+          }
+        }
+
+        @container (max-width: 360px) {
+          .col-actions {
+            display: none;
+          }
+        }
+      </style>
+    </div>
+  </div>
+</div>
+{% endblock %}

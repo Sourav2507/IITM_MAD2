@@ -3,6 +3,7 @@ from controllers.auth import auth
 from controllers.admin import admin
 from controllers.user import user
 from models import db
+from datetime import timedelta
 from flask_migrate import Migrate
 from models.customers import *
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -10,6 +11,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 app = Flask(__name__)
 
 app.secret_key = "Modern_application_development"
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -20,9 +22,15 @@ app.register_blueprint(auth)
 app.register_blueprint(admin)
 app.register_blueprint(user)
 
+
+
 @app.route('/')
 def home():
     return render_template('landing.html')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 def create_admin():
     admin = User.query.filter_by(role='admin').first()

@@ -4,33 +4,33 @@ from models.customers import *
 
 user = Blueprint('user', __name__)
 
-@user.route('/user')
+@user.route('/user/dashboard')
 def user_db():
     print(session)
     user = User.query.filter_by(username=session['username']).first()
     return render_template('customer_db.html')
 
-@user.route('/find_parking')
+@user.route('/user/find_parking')
 def find_parking():
     return render_template('find_parking.html')
 
-@user.route('/bookings')
+@user.route('/user/bookings')
 def bookings():
     return render_template('bookings.html')
 
-@user.route('/payments')
+@user.route('/user/payments')
 def payments():
     return render_template('payments.html')
 
-@user.route('/help_and_support')
+@user.route('/user/help_and_support')
 def help_and_support():
     return render_template('help_and_support.html')
 
-@user.route('/notifications')
+@user.route('/user/notifications')
 def notifications():
     return render_template('notifications.html')
 
-@user.route('/profile')
+@user.route('/user/profile')
 def profile():
     return render_template('profile.html')
 

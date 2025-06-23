@@ -1,0 +1,76 @@
+{% extends "admin.html" %}
+
+{% block admin_content %}
+<div class="px-40 flex flex-1 justify-center py-5">
+  <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+
+    <!-- Header Section -->
+    <div class="flex flex-wrap justify-between gap-3 p-4">
+      <div class="flex min-w-72 flex-col gap-3">
+        <p class="text-[#101719] text-[32px] font-bold leading-tight">Bookings</p>
+        <p class="text-[#587f8d] text-sm font-normal leading-normal">Manage and view all bookings</p>
+      </div>
+    </div>
+
+    <!-- Search Input -->
+    <div class="px-4 py-3">
+      <label class="flex flex-col min-w-40 h-12 w-full">
+        <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
+          <div class="text-[#587f8d] flex border-none bg-[#e9eff1] items-center justify-center pl-4 rounded-l-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z" />
+            </svg>
+          </div>
+          <input
+            placeholder="Search by booking ID or user email"
+            class="form-input flex w-full min-w-0 flex-1 rounded-r-xl bg-[#e9eff1] px-4 placeholder:text-[#587f8d] focus:outline-none"
+          />
+        </div>
+      </label>
+    </div>
+
+    <!-- Table -->
+    <div class="px-4 py-3 @container">
+      <div class="flex overflow-hidden rounded-xl border border-[#d3dfe4] bg-gray-50">
+        <table class="flex-1">
+          <thead>
+            <tr class="bg-gray-50">
+              <th class="booking-col-120 px-4 py-3 text-left text-[#101719] w-[400px] text-sm font-medium">Booking ID</th>
+              <th class="booking-col-240 px-4 py-3 text-left text-[#101719] w-[400px] text-sm font-medium">User Email</th>
+              <th class="booking-col-360 px-4 py-3 text-left text-[#101719] w-[400px] text-sm font-medium">Slot ID</th>
+              <th class="booking-col-480 px-4 py-3 text-left text-[#101719] w-[400px] text-sm font-medium">Start Time</th>
+              <th class="booking-col-600 px-4 py-3 text-left text-[#101719] w-[400px] text-sm font-medium">End Time</th>
+              <th class="booking-col-720 px-4 py-3 text-left text-[#101719] w-60 text-sm font-medium">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for booking in bookings %}
+            <tr class="border-t border-t-[#d3dfe4]">
+              <td class="booking-col-120 h-[72px] px-4 py-2 w-[400px] text-[#101719] text-sm">#{{ booking.id }}</td>
+              <td class="booking-col-240 h-[72px] px-4 py-2 w-[400px] text-[#587f8d] text-sm">{{ booking.email }}</td>
+              <td class="booking-col-360 h-[72px] px-4 py-2 w-[400px] text-[#587f8d] text-sm">{{ booking.slot }}</td>
+              <td class="booking-col-480 h-[72px] px-4 py-2 w-[400px] text-[#587f8d] text-sm">{{ booking.start_time }}</td>
+              <td class="booking-col-600 h-[72px] px-4 py-2 w-[400px] text-[#587f8d] text-sm">{{ booking.end_time }}</td>
+              <td class="booking-col-720 h-[72px] px-4 py-2 w-60 text-sm">
+                <button class="w-full h-8 px-4 bg-[#e9eff1] rounded-full text-sm font-medium text-[#101719]">
+                  {{ booking.status }}
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <style>
+        @container(max-width:120px){.booking-col-120{display: none;}}
+        @container(max-width:240px){.booking-col-240{display: none;}}
+        @container(max-width:360px){.booking-col-360{display: none;}}
+        @container(max-width:480px){.booking-col-480{display: none;}}
+        @container(max-width:600px){.booking-col-600{display: none;}}
+        @container(max-width:720px){.booking-col-720{display: none;}}
+      </style>
+    </div>
+  </div>
+</div>
+{% endblock %}

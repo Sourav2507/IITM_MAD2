@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Panel | Parksy{% endblock %}
+
+{% block head %}
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+<link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;700" />
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+{% endblock %}
+
+{% block body %}
+<div class="relative flex min-h-screen flex-col bg-gray-50 overflow-x-hidden"
+    style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
+    <div class="flex h-full flex-col">
+        <div class="flex flex-1 justify-center gap-1 px-6 py-5">
+            <!-- Sidebar -->
+            <div class="flex flex-col w-80 bg-gray-50 p-4 min-h-[700px] justify-between">
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <img src="{{ url_for('static', filename='images/logo_2.png') }}" alt="Parksy Logo"
+                            class="h-12 object-contain" />
+                        <h1 class="text-[#101719] text-2xl font-semibold">Admin Panel</h1>
+                    </div>
+
+
+                    <div class="flex flex-col gap-2">
+                        <a href="{{ url_for('admin.admin_db') }}"
+                            class="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-[#e9eff1]">
+                            <div class="text-[#101719]">
+                                <!-- Home icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
+                                    viewBox="0 0 256 256">
+                                    <path d="M224,115.55V208a16,16...Z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-[#101719] text-sm font-medium">Dashboard</p>
+                        </a>
+
+                        <a href="{{ url_for('admin.manage_slots') }}"
+                            class="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-[#e9eff1]">
+                            <div class="text-[#101719]">
+                                <!-- Calendar icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 256 256">
+                                    <path d="M208,32H184V24...Z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-[#101719] text-sm font-medium">Manage Slots</p>
+                        </a>
+
+                        <a href="{{ url_for('admin.manage_users') }}"
+                            class="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-[#e9eff1]">
+                            <div class="text-[#101719]">
+                                <!-- Users icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 256 256">
+                                    <path d="M117.25,157.92a60,60...Z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-[#101719] text-sm font-medium">View Users</p>
+                        </a>
+
+                        <a href="{{ url_for('admin.admin_bookings') }}"
+                            class="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-[#e9eff1]">
+                            <div class="text-[#101719]">
+                                <!-- History icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 256 256">
+                                    <path d="M136,80v43.47...Z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-[#101719] text-sm font-medium">Bookings</p>
+                        </a>
+
+                        <a href="{{ url_for('admin.reports') }}"
+                            class="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-[#e9eff1]">
+                            <div class="text-[#101719]">
+                                <!-- Reports icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 256 256">
+                                    <path d="M216,40H136V24...Z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-[#101719] text-sm font-medium">Reports</p>
+                        </a>
+
+                        <a href="{{ url_for('auth.logout') }}"
+                            class="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-[#e9eff1]">
+                            <div class="text-[#101719]">
+                                <!-- Reports icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 256 256">
+                                    <path d="M216,40H136V24...Z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-[#101719] text-sm font-medium">Logout</p>
+                        </a>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="flex flex-col flex-1 max-w-[960px]">
+                {% block admin_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

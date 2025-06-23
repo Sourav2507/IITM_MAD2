@@ -1,0 +1,48 @@
+{% extends "admin.html" %}
+
+{% block admin_content %}
+<div class="flex flex-wrap justify-between gap-3 p-4">
+  <p class="text-[#101719] tracking-light text-[32px] font-bold leading-tight min-w-72">User Management</p>
+</div>
+
+<div class="flex gap-3 p-3 flex-wrap pr-4">
+  <button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#e7f0f3] pl-4 pr-2">
+    <p class="text-[#0d181b] text-sm font-medium leading-normal">Role</p>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+      <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+    </svg>
+  </button>
+</div>
+
+<!-- Users Table -->
+<div class="px-4 py-3 @container">
+  <div class="flex overflow-hidden rounded-xl border border-[#cfe1e7] bg-[#f8fbfc]">
+    <table class="flex-1">
+      <thead>
+        <tr class="bg-[#f8fbfc]">
+          <th class="px-4 py-3 w-[400px] text-left text-[#0d181b] text-sm font-medium">Name</th>
+          <th class="px-4 py-3 w-[400px] text-left text-[#0d181b] text-sm font-medium">Email</th>
+          <th class="px-4 py-3 w-60 text-left text-[#0d181b] text-sm font-medium">Role</th>
+          <th class="px-4 py-3 w-[400px] text-left text-[#0d181b] text-sm font-medium">Phone Number</th>
+          <th class="px-4 py-3 w-[400px] text-left text-[#0d181b] text-sm font-medium">Registration Number</th>
+          <th class="px-4 py-3 w-60 text-left text-[#4c859a] text-sm font-medium">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example user row -->
+        <tr class="border-t border-[#cfe1e7]">
+          <td class="px-4 py-2 w-[400px] text-[#0d181b] text-sm">Ethan Harper</td>
+          <td class="px-4 py-2 w-[400px] text-[#4c859a] text-sm">ethan.harper@example.com</td>
+          <td class="px-4 py-2 w-60">
+            <span class="flex justify-center rounded-full h-8 px-4 bg-[#e7f0f3] text-[#0d181b] text-sm">Admin</span>
+          </td>
+          <td class="px-4 py-2 w-[400px] text-[#4c859a] text-sm">(555) 123-4567</td>
+          <td class="px-4 py-2 w-[400px] text-[#4c859a] text-sm">REG12345</td>
+          <td class="px-4 py-2 w-60 text-[#4c859a] text-sm font-bold">Delete</td>
+        </tr>
+        <!-- Add more user rows below -->
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
