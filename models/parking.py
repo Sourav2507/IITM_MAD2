@@ -25,10 +25,18 @@ class Slot(db.Model):
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     parking_lot_id = db.Column(db.Integer, db.ForeignKey('parking_lot.id'), nullable=False)
     status = db.Column(db.String(20), default='Requested')
     date_booked = db.Column(db.DateTime, default=datetime.utcnow)
 
     user = db.relationship('User', backref='bookings')
     parking_lot = db.relationship('ParkingLot', backref='bookings')
+
+class SlotBooking(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    booking_id = db.Column(db.Integer, db.ForeignKey('booking.id'), nullable=False)
+    slot_id = db.Column(db.Integer, db.ForeignKey('slot.id'), nullable=False)
+
+    booking = db.relationship('Booking', backref='slot_booking')
+    slot = db.relationship('Slot', backref='slot_booking')
