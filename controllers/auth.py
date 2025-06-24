@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, session, request
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.customers import *
+from models.parking import *
+from flask import jsonify
+
 
 auth = Blueprint('auth', __name__)
 
@@ -73,3 +76,4 @@ def register():
 def logout():
     session.clear()
     return redirect('/')
+
