@@ -1,0 +1,60 @@
+.customer-db {
+    font-family: "Space Grotesk", "Noto Sans", sans-serif;
+    background-color: #f8fbfc;
+}
+
+/* Search input */
+.search-input {
+    background-color: #e7f0f3;
+    border: none;
+    color: #0e171b;
+}
+
+.search-input::placeholder {
+    color: #4e8397;
+}
+
+/* Filter buttons */
+.filter-button {
+    background-color: #e7f0f3;
+    color: #0e171b;
+    border: none;
+    border-radius: 999px;
+    padding: 0.4rem 1rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Map Section */
+.map-section {
+    background-size: cover;
+    background-position: center;
+    min-height: 320px;
+    border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Floating Buttons */
+.floating-button {
+    width: 40px;
+    height: 40px;
+    background-color: #f8fbfc;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #0e171b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-button:hover {
+    background-color: #dee7ec;
+}
+
+.rotate-flip {
+    transform: scaleX(-1);
+}
