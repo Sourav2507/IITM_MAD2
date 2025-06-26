@@ -2,50 +2,38 @@
 
 {% block title %}Notifications{% endblock %}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notifications.css') }}">
+{% endblock %}
+
 {% block content %}
-<div class="px-40 flex flex-1 justify-center py-5">
-  <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<div class="container py-5">
+  <div class="mx-auto notification-wrapper">
 
-    <div class="flex flex-wrap justify-between gap-3 p-4">
-      <p class="text-[#101618] text-[32px] font-bold leading-tight min-w-72">Notifications</p>
-      <button
-        class="flex h-8 px-4 items-center justify-center rounded-full bg-[#eaeff1] text-[#101618] text-sm font-medium"
-      >
-        Mark all as read
-      </button>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap mb-4 px-2">
+      <h2 class="fw-bold text-dark mb-3">Notifications</h2>
+      <button class="btn btn-light btn-sm">Mark all as read</button>
     </div>
 
-    <!-- 🔔 Notification 1: Parking Confirmation -->
-    <div class="p-4">
-      <div class="flex items-stretch justify-between gap-4 rounded-xl">
-        <div class="flex flex-col gap-1 flex-[2_2_0px]">
-          <p class="text-[#5c7d8a] text-sm font-normal">New</p>
-          <p class="text-[#101618] text-base font-bold leading-tight">Parking Confirmed</p>
-          <p class="text-[#5c7d8a] text-sm font-normal">
-            Your booking at City Mall Parking is confirmed for June 23 at 5:00 PM.
-          </p>
-        </div>
-        <div
-          class="bg-cover bg-center aspect-video rounded-xl flex-1"
-          style='background-image: url("/static/images/notification1.jpg");'
-        ></div>
+    <!-- Notification 1 -->
+    <div class="notification-card mb-4 p-3 rounded shadow-sm bg-white d-flex flex-column flex-md-row gap-3">
+      <div class="flex-grow-1">
+        <p class="text-primary small fw-semibold mb-1">New</p>
+        <h5 class="fw-bold text-dark mb-1">Parking Confirmed</h5>
+        <p class="text-muted mb-0">Your booking at City Mall Parking is confirmed for June 23 at 5:00 PM.</p>
       </div>
+      <div class="notification-img rounded" style="background-image: url('/static/images/notification1.jpg');"></div>
     </div>
 
-    <!-- 💳 Notification 2: Payment Successful -->
-    <div class="p-4">
-      <div class="flex items-stretch justify-between gap-4 rounded-xl">
-        <div class="flex flex-col gap-1 flex-[2_2_0px]">
-          <p class="text-[#101618] text-base font-bold leading-tight">Payment Successful</p>
-          <p class="text-[#5c7d8a] text-sm font-normal">
-            ₹100 was successfully paid for your recent booking on June 22.
-          </p>
-        </div>
-        <div
-          class="bg-cover bg-center aspect-video rounded-xl flex-1"
-          style='background-image: url("/static/images/payment.jpg");'
-        ></div>
+    <!-- Notification 2 -->
+    <div class="notification-card mb-4 p-3 rounded shadow-sm bg-white d-flex flex-column flex-md-row gap-3">
+      <div class="flex-grow-1">
+        <h5 class="fw-bold text-dark mb-1">Payment Successful</h5>
+        <p class="text-muted mb-0">₹100 was successfully paid for your recent booking on June 22.</p>
       </div>
+      <div class="notification-img rounded" style="background-image: url('/static/images/payment.jpg');"></div>
     </div>
 
   </div>

@@ -1,62 +1,69 @@
 {% extends "customer.html" %}
 
+{% block title %}Payments - PARKSY{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/payments.css') }}">
+{% endblock %}
+
 {% block content %}
-<div class="px-40 flex flex-1 justify-center py-5">
-  <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-    <div class="flex flex-wrap justify-between gap-3 p-4">
-      <p class="text-[#0e171b] tracking-light text-[32px] font-bold leading-tight min-w-72">Payments</p>
+<div class="container py-5">
+  <div class="mx-auto" style="max-width: 960px;">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+      <h1 class="h3 fw-bold text-dark">Payments</h1>
     </div>
 
-    <h2 class="text-[#0e171b] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Payment History</h2>
-    <div class="px-4 py-3 @container">
-      <div class="flex overflow-hidden rounded-xl border border-[#d0e0e7] bg-[#f8fbfc]">
-        <table class="flex-1">
-          <thead>
-            <tr class="bg-[#f8fbfc]">
-              <th class="px-4 py-3 text-left text-[#0e171b] w-[400px] text-sm font-medium">Method</th>
-              <th class="px-4 py-3 text-left text-[#0e171b] w-[400px] text-sm font-medium">Amount</th>
-              <th class="px-4 py-3 text-left text-[#0e171b] w-[400px] text-sm font-medium">Date</th>
-              <th class="px-4 py-3 text-left text-[#0e171b] w-60 text-sm font-medium">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-t border-t-[#d0e0e7]">
-              <td class="h-[72px] px-4 py-2 text-[#4e8397] text-sm font-normal">Credit Card</td>
-              <td class="h-[72px] px-4 py-2 text-[#4e8397] text-sm font-normal">$25.00</td>
-              <td class="h-[72px] px-4 py-2 text-[#4e8397] text-sm font-normal">2024-01-15</td>
-              <td class="h-[72px] px-4 py-2 text-sm font-normal">
-                <button class="rounded-full h-8 px-4 bg-[#e7f0f3] text-[#0e171b] text-sm font-medium w-full">Paid</button>
-              </td>
-            </tr>
-            <!-- Repeat as needed -->
-          </tbody>
-        </table>
-      </div>
+    <!-- Payment History Section -->
+    <h4 class="mb-3 px-2">Payment History</h4>
+    <div class="table-responsive mb-5 px-2">
+      <table class="table table-bordered bg-light">
+        <thead class="table-light">
+          <tr>
+            <th class="text-center">Method</th>
+            <th class="text-center">Amount</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center">Credit Card</td>
+            <td class="text-center">$25.00</td>
+            <td class="text-center">2024-01-15</td>
+            <td class="text-center text-success fw-semibold">Paid</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <h2 class="text-[#0e171b] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Unpaid Bookings</h2>
-    <div class="px-4 py-3 @container">
-      <div class="flex overflow-hidden rounded-xl border border-[#d0e0e7] bg-[#f8fbfc]">
-        <table class="flex-1">
-          <thead>
-            <tr class="bg-[#f8fbfc]">
-              <th class="px-4 py-3 text-left text-[#0e171b] w-[400px] text-sm font-medium">Booking ID</th>
-              <th class="px-4 py-3 text-left text-[#0e171b] w-[400px] text-sm font-medium">Amount</th>
-              <th class="px-4 py-3 text-left text-[#0e171b] w-[400px] text-sm font-medium">Due Date</th>
-              <th class="px-4 py-3 text-left text-[#0e171b] w-60 text-sm font-medium">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-t border-t-[#d0e0e7]">
-              <td class="h-[72px] px-4 py-2 text-[#4e8397] text-sm font-normal">#12345</td>
-              <td class="h-[72px] px-4 py-2 text-[#4e8397] text-sm font-normal">$15.75</td>
-              <td class="h-[72px] px-4 py-2 text-[#4e8397] text-sm font-normal">2024-03-10</td>
-              <td class="h-[72px] px-4 py-2 text-[#4e8397] text-sm font-bold tracking-[0.015em]">Pay Now</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <!-- Unpaid Bookings Section -->
+    <h4 class="mb-3 px-2">Unpaid Bookings</h4>
+    <div class="table-responsive px-2">
+      <table class="table table-bordered bg-light">
+        <thead class="table-light">
+          <tr>
+            <th class="text-center">Booking ID</th>
+            <th class="text-center">Amount</th>
+            <th class="text-center">Due Date</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center">#12345</td>
+            <td class="text-center">$15.75</td>
+            <td class="text-center">2024-03-10</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary">Pay Now</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
   </div>
 </div>
 {% endblock %}

@@ -1,71 +1,68 @@
 {% extends "customer.html" %}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/help_and_support.css') }}">
+{% endblock %}
+
 {% block content %}
-<div class="px-40 flex flex-1 justify-center py-5">
-  <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-    <div class="flex flex-wrap justify-between gap-3 p-4">
-      <p class="text-[#0e171b] tracking-light text-[32px] font-bold leading-tight min-w-72">Support &amp; Help</p>
-    </div>
+<div class="container my-5">
+  <!-- Header -->
+  <div class="mb-4">
+    <h1 class="display-5 fw-bold text-dark">Support & Help</h1>
+  </div>
 
-    <h2 class="text-[#0e171b] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Frequently Asked Questions</h2>
-    <div class="flex flex-col p-4 gap-3">
-      {% for question in [
-        "How do I book a parking spot?",
-        "What payment methods are accepted?",
-        "How can I cancel my reservation?"
-      ] %}
-      <details class="flex flex-col rounded-xl border border-[#d0e0e7] bg-[#f8fbfc] px-[15px] py-[7px] group">
-        <summary class="flex cursor-pointer items-center justify-between gap-6 py-2">
-          <p class="text-[#0e171b] text-sm font-medium leading-normal">{{ question }}</p>
-          <div class="text-[#0e171b] group-open:rotate-180" data-icon="CaretDown" data-size="20px" data-weight="regular">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-              <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
-            </svg>
-          </div>
-        </summary>
-        <p class="text-[#4e8397] text-sm font-normal leading-normal pb-2"></p>
-      </details>
-      {% endfor %}
-    </div>
-
-    <h2 class="text-[#0e171b] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Contact Us</h2>
-
-    <form>
-      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-        <label class="flex flex-col min-w-40 flex-1">
-          <p class="text-[#0e171b] text-base font-medium leading-normal pb-2">Your Name</p>
-          <input placeholder="Enter your name" class="form-input ..."/>
-        </label>
-      </div>
-
-      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-        <label class="flex flex-col min-w-40 flex-1">
-          <p class="text-[#0e171b] text-base font-medium leading-normal pb-2">Email Address</p>
-          <input placeholder="Enter your email" class="form-input ..."/>
-        </label>
-      </div>
-
-      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-        <label class="flex flex-col min-w-40 flex-1">
-          <p class="text-[#0e171b] text-base font-medium leading-normal pb-2">Message</p>
-          <textarea placeholder="Describe your issue" class="form-input ..."></textarea>
-        </label>
-      </div>
-
-      <div class="flex px-4 py-3 justify-start">
-        <button class="...">Submit</button>
-      </div>
-    </form>
-
-    <h2 class="text-[#0e171b] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Emergency Support</h2>
-    <p class="text-[#0e171b] text-base font-normal leading-normal pb-3 pt-1 px-4">For immediate assistance, please call our 24/7 hotline or start a live chat.</p>
-    
-    <div class="flex justify-stretch">
-      <div class="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-start">
-        <button class="...">Call Hotline</button>
-        <button class="...">Start Chat</button>
+  <!-- FAQ Section -->
+  <h4 class="mb-3">Frequently Asked Questions</h4>
+  <div class="accordion" id="faqAccordion">
+    {% for question in [
+      "How do I book a parking spot?",
+      "What payment methods are accepted?",
+      "How can I cancel my reservation?"
+    ] %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ loop.index }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+          {{ question }}
+        </button>
+      </h2>
+      <div id="collapse{{ loop.index }}" class="accordion-collapse collapse"
+        aria-labelledby="heading{{ loop.index }}" data-bs-parent="#faqAccordion">
+        <div class="accordion-body text-secondary">
+          This is a sample answer. You can update it dynamically if needed.
+        </div>
       </div>
     </div>
+    {% endfor %}
+  </div>
+
+  <!-- Contact Us -->
+  <h4 class="mt-5 mb-3">Contact Us</h4>
+  <form>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-control" placeholder="Enter your name">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-control" placeholder="Enter your email">
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Message</label>
+      <textarea class="form-control" rows="4" placeholder="Describe your issue"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <!-- Emergency Support -->
+  <h4 class="mt-5 mb-3">Emergency Support</h4>
+  <p class="text-muted">For immediate assistance, please call our 24/7 hotline or start a live chat.</p>
+  <div class="d-flex gap-2">
+    <button class="btn btn-outline-secondary">Call Hotline</button>
+    <button class="btn btn-outline-secondary">Start Chat</button>
   </div>
 </div>
 {% endblock %}
