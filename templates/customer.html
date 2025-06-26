@@ -2,72 +2,56 @@
 
 {% block head %}
 {{ super() }}
-<!-- Fonts and Tailwind -->
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-<link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
-    href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;700" />
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/customer.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-<div class="relative flex min-h-screen flex-col group/design-root size-full bg-[#f8fbfc]"
-    style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
-    <div class="layout-container flex h-full grow flex-col">
+<div class="min-vh-100 d-flex flex-column" style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
 
-        <!-- ✅ Header Section -->
-        <header
-            class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7f0f3] px-10 py-3">
-            <div class="flex items-center gap-4 text-[#0e171b]">
-                <div class="h-10 w-12">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"
-                        class="h-full w-full object-contain">
+    <!-- ✅ Header Section -->
+    <header class="d-flex justify-content-between align-items-center border-bottom px-4 py-3 bg-white">
+        <div class="d-flex align-items-center gap-3">
+            <div style="height: 40px; width: 50px;">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"
+                     class="img-fluid object-fit-contain">
+            </div>
+            <h2 class="mb-0 fw-bold text-dark">Parksy</h2>
+        </div>
+
+        <div class="d-flex align-items-center gap-4">
+            <a class="text-dark fw-medium text-decoration-none" href="{{ url_for('user.user_db') }}">Home</a>
+            <a class="text-dark fw-medium text-decoration-none" href="{{ url_for('user.find_parking') }}">Find Parking</a>
+            <a class="text-dark fw-medium text-decoration-none" href="{{ url_for('user.bookings') }}">My Bookings</a>
+            <a class="text-dark fw-medium text-decoration-none" href="{{ url_for('user.payments') }}">Payments</a>
+            <a class="text-dark fw-medium text-decoration-none" href="{{ url_for('user.help_and_support') }}">Help</a>
+
+            <a href="{{ url_for('user.notifications') }}">
+                <div class="position-relative" style="height: 24px; width: 24px;">
+                    <img src="{{ url_for('static', filename='images/notification.png') }}" alt="Notifications"
+                         class="img-fluid">
+                    <!-- Optional dot -->
+                    <!-- <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span> -->
                 </div>
-                <h2 class="text-[#0e171b] text-lg font-bold leading-tight tracking-[-0.015em]">Parksy</h2>
-            </div>
+            </a>
 
-            <div class="flex items-center gap-8">
-                <a class="text-[#0e171b] text-sm font-medium leading-normal"
-                    href="{{ url_for('user.user_db') }}">Home</a>
-                <a class="text-[#0e171b] text-sm font-medium leading-normal"
-                    href="{{ url_for('user.find_parking') }}">Find Parking</a>
-                <a class="text-[#0e171b] text-sm font-medium leading-normal" href="{{ url_for('user.bookings') }}">My
-                    Bookings</a>
-                <a class="text-[#0e171b] text-sm font-medium leading-normal"
-                    href="{{ url_for('user.payments') }}">Payments</a>
-                <a class="text-[#0e171b] text-sm font-medium leading-normal"
-                    href="{{ url_for('user.help_and_support') }}">Help and Support</a>
+            <a href="{{ url_for('user.profile') }}">
+                <div class="rounded-circle overflow-hidden" style="height: 36px; width: 36px;">
+                    <img src="{{ url_for('static', filename='images/person.png') }}" alt="User"
+                         class="img-fluid object-fit-cover">
+                </div>
+            </a>
 
+            <a href="{{ url_for('auth.logout') }}">
+                <div class="rounded-circle overflow-hidden" style="height: 36px; width: 36px;">
+                    <img src="{{ url_for('static', filename='images/logout.png') }}" alt="Logout"
+                         class="img-fluid object-fit-cover">
+                </div>
+            </a>
+        </div>
+    </header>
 
-                <a href="{{ url_for('user.notifications') }}">
-                    <div class="h-6 w-6 flex items-center justify-center relative cursor-pointer">
-                        <img src="{{ url_for('static', filename='images/notification.png') }}" alt="Notifications"
-                            class="h-full w-full object-contain" />
-                        <!-- Notification dot if needed:
-    <span class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span> -->
-                    </div>
-                </a>
-
-                <a href="{{ url_for('user.profile') }}">
-                    <div class="h-9 w-9 rounded-full overflow-hidden cursor-pointer">
-                        <img src="{{ url_for('static', filename='images/person.png') }}" alt="User Icon"
-                            class="h-full w-full object-cover">
-                    </div>
-                </a>
-
-                <a href="{{ url_for('auth.logout') }}">
-                    <div class="h-9 w-9 rounded-full overflow-hidden cursor-pointer">
-                        <img src="{{ url_for('static', filename='images/logout.png') }}" alt="User Icon"
-                            class="h-full w-full object-cover">
-                    </div>
-                </a>
-
-
-            </div>
-        </header>
-
-        <!-- Page content block -->
-        {% block content %}{% endblock %}
-
-    </div>
+    <!-- Page content block -->
+    {% block content %}{% endblock %}
 </div>
 {% endblock %}
