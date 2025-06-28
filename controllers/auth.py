@@ -1,8 +1,7 @@
-from flask import Blueprint, render_template, redirect, url_for, session, request
+from flask import Blueprint, render_template, redirect, url_for, session, request,jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.customers import *
 from models.parking import *
-from flask import jsonify
 
 
 auth = Blueprint('auth', __name__)
@@ -19,20 +18,40 @@ def login():
             return render_template("login.html")
 
     elif request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        data = request.get_json()
+        if not data:
+            return jsonify({"message": "No data received"}), 400
+
+        username = data.get('username')
+        password = data.get('password')
+
+        if not username or not password:
+            return jsonify({"message": "Username and password required"}), 400
+
         user = User.query.filter_by(username=username).first()
         if user:
             if check_password_hash(user.password, password):
-                session.permanent = True  # <-- Added here
+                session.permanent = True
                 session['role'] = user.role
                 session['username'] = user.username
                 session['email'] = user.email
+
+                # Correct route based on role
                 if user.role == 'admin':
-                    return redirect(url_for('admin.admin_db'))
-                return redirect(url_for('user.user_db'))
-            return "Wrong Password"
-        return "Username Doesn't exist"
+                    redirect_url = url_for('admin.admin_db')
+                else:
+                    redirect_url = url_for('user.user_db')
+
+                return jsonify({
+                    "message": "Login successful",
+                    "redirect": redirect_url,
+                    "role": user.role
+                }), 200
+            else:
+                return jsonify({"message": "Wrong password"}), 401
+        else:
+            return jsonify({"message": "Username doesn't exist"}), 404
+
 
 
 @auth.route('/register', methods=['GET', 'POST'])
