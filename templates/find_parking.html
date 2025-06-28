@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container py-5">
+<div class="container py-5" id="find_parking_app">
     <!-- Header -->
     <div class="mb-4">
         <h2 class="fw-bold text-dark">Find Parking</h2>
@@ -19,31 +19,29 @@
             <span class="input-group-text bg-light border-0">
                 <i class="bi bi-search text-muted"></i>
             </span>
-            <input type="text" class="form-control border-0 bg-light search-input"
+            <input type="text" v-model="searchQuery" class="form-control border-0 bg-light search-input"
                 placeholder="Search for a city or address">
         </div>
     </div>
 
-    <!-- Nearest Available Spots -->
+    
     <h4 class="fw-bold text-dark mb-3">Nearest Available Spots</h4>
-    <div class="card mb-4 border-0 shadow-sm">
+    <div v-for="lot in filteredLots" :key="lot.id" class="card mb-4 border-0 shadow-sm">
         <div class="row g-0 align-items-center">
             <div class="col-md-8 p-3">
-                <h5 class="fw-bold mb-1">Downtown Parking Garage</h5>
-                <p class="text-muted mb-2">123 Main Street, 0.5 miles away</p>
-                <span class="badge bg-light text-dark px-3 py-2 fw-medium">Available</span>
+                <h5 class="fw-bold mb-1">${ lot.name }</h5>
+                <p class="text-muted mb-2">${ lot.address }</p>
+                <span class="badge bg-light text-dark px-3 py-2 fw-medium">Capacity: ${ lot.capacity }</span>
             </div>
             <div class="col-md-4">
                 <div class="ratio ratio-16x9 rounded overflow-hidden">
-  <img src="https://www.keflatwork.com/wp-content/uploads/2019/01/parking-lot-with-trees.jpg"
-       class="img-fluid object-fit-cover"
-       alt="Parking spot with trees">
-</div>
-
-
+                    <img src="https://www.keflatwork.com/wp-content/uploads/2019/01/parking-lot-with-trees.jpg"
+                        class="img-fluid object-fit-cover" alt="Parking spot">
+                </div>
             </div>
         </div>
     </div>
+    <p v-if="filteredLots.length === 0" class="text-muted">No results found.</p>
 
     <!-- Quick Actions -->
     <h4 class="fw-bold text-dark mt-5 mb-3">Quick Actions</h4>
@@ -53,4 +51,9 @@
     </div>
     <button class="btn btn-outline-secondary fw-bold w-100">Make a Payment</button>
 </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/find_parking.js') }}"></script>
 {% endblock %}

@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from werkzeug.utils import secure_filename
 import os
 from models.customers import *
+from models.parking import *
 
 user = Blueprint('user', __name__)
 
@@ -15,6 +16,22 @@ def user_db():
 @user.route('/user/find_parking')
 def find_parking():
     return render_template('find_parking.html')
+
+@user.route('/user/find_parking_data')
+def find_parking_data():
+    parking_lots = ParkingLot.query.all()
+    result = []
+    for lot in parking_lots:
+        result.append({
+            'id': lot.id,
+            'name': lot.name,
+            'address': lot.address,
+            'capacity': lot.capacity,
+            'price': lot.price,
+            'date_of_registration': lot.date_of_registration.strftime('%Y-%m-%d')
+        })
+    return jsonify(result)
+
 
 @user.route('/user/bookings')
 def bookings():
