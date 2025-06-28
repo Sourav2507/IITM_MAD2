@@ -62,33 +62,55 @@ def register():
         return render_template("register.html")
 
     elif request.method == 'POST':
-        username = request.form.get('username')
-        user = User.query.filter_by(username=username).first()
-        if user:
-            return redirect(url_for('auth.login'))
-        
-        password = request.form.get('password')
-        fname = request.form.get('fname')
-        lname = request.form.get('lname')
-        email = request.form.get('email')
-        phone = request.form.get('ph_no')
-        age = request.form.get('age')
-        gender = request.form.get('gender')
-        reg_no = request.form.get('reg_no')
-        address = request.form.get('city') + "," + request.form.get('state')
+        data = request.get_json()
+        if not data:
+            return jsonify({"message": "No data received"}), 400
 
-        user = User(username=username, password=generate_password_hash(password), fname=fname,
-                    lname=lname, email=email, phone=phone, age=age, gender=gender,
-                    reg_no=reg_no, address=address)
+        username = data.get('username')
+        email = data.get('email')
+
+        if User.query.filter_by(username=username).first():
+            return jsonify({"message": "Username already exists"}), 409
+
+        if User.query.filter_by(email=email).first():
+            return jsonify({"message": "Email already exists"}), 409
+
+        password = data.get('password')
+        confirm_password = data.get('confirm_password')
+
+        if not password or password != confirm_password:
+            return jsonify({"message": "Passwords do not match or are empty"}), 400
+
+        # Create user
+        user = User(
+            username=username,
+            password=generate_password_hash(password),
+            fname=data.get('fname'),
+            lname=data.get('lname'),
+            email=email,
+            phone=data.get('ph_no'),
+            age=data.get('age'),
+            gender=data.get('gender'),
+            reg_no=data.get('reg_no'),
+            address=f"{data.get('city')}, {data.get('state')}",
+            role='user',
+            profile_image='images/person.png'
+        )
+
         db.session.add(user)
         db.session.commit()
 
-        session.permanent = True  # <-- Added here
+        # Login after register
+        session.permanent = True
         session['username'] = username
-        session['role'] = 'user'
         session['email'] = email
+        session['role'] = 'user'
 
-        return redirect(url_for('user.user_db'))
+        return jsonify({
+            "message": "Registration successful",
+            "redirect": url_for('user.user_db')
+        }), 200
+
 
 
 @auth.route('/logout', methods=['GET'])

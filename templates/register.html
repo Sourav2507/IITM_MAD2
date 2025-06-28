@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="register-container">
+<div class="register-container" id="app">
     <div class="register-left">
         <!-- Logo -->
         <div class="logo-container">
@@ -14,36 +14,39 @@
         </div>
 
         <!-- Registration Form -->
-        <form action="{{ url_for('auth.register') }}" method="post">
+        <form v-on:submit.prevent="handleRegister">
             <h2>Welcome to PARKSY!</h2>
             <p>Please fill in your details to create your account.</p>
+
+            <p v-if="errorMessage" class="error-message">${ errorMessage }</p>
+            <p v-if="successMessage" class="success-message">${ successMessage }</p>
 
             <div class="form-columns">
                 <!-- Left Column -->
                 <div class="form-col">
                     <div class="form_group">
                         <label for="username">Username</label>
-                        <input required type="text" name="username" id="username">
+                        <input v-model="form.username" required type="text" id="username">
                     </div>
                     <div class="form_group">
                         <label for="password">Password</label>
-                        <input required type="password" name="password" id="password">
+                        <input v-model="form.password" required type="password" id="password">
                     </div>
                     <div class="form_group">
                         <label for="confirm_password">Confirm Password</label>
-                        <input required type="password" name="confirm_password" id="confirm_password">
+                        <input v-model="form.confirm_password" required type="password" id="confirm_password">
                     </div>
                     <div class="form_group">
                         <label for="fname">First Name</label>
-                        <input required type="text" name="fname" id="fname">
+                        <input v-model="form.fname" required type="text" id="fname">
                     </div>
                     <div class="form_group">
                         <label for="lname">Last Name</label>
-                        <input required type="text" name="lname" id="lname">
+                        <input v-model="form.lname" required type="text" id="lname">
                     </div>
                     <div class="form_group">
                         <label for="email">Email ID</label>
-                        <input required type="email" name="email" id="email">
+                        <input v-model="form.email" required type="email" id="email">
                     </div>
                 </div>
 
@@ -51,31 +54,31 @@
                 <div class="form-col">
                     <div class="form_group">
                         <label for="ph_no">Phone Number</label>
-                        <input type="number" name="ph_no" id="ph_no">
+                        <input v-model="form.ph_no" type="number" id="ph_no">
                     </div>
                     <div class="form_group">
                         <label for="age">Age</label>
-                        <input required type="number" name="age" id="age" min="18">
+                        <input v-model="form.age" required type="number" id="age" min="18">
                     </div>
                     <div class="form_group">
                         <label>Gender</label>
                         <div class="gender_group">
-                            <label><input type="radio" name="gender" value="Male"> Male</label>
-                            <label><input type="radio" name="gender" value="Female"> Female</label>
-                            <label><input type="radio" name="gender" value="Other"> Other</label>
+                            <label><input type="radio" value="Male" v-model="form.gender"> Male</label>
+                            <label><input type="radio" value="Female" v-model="form.gender"> Female</label>
+                            <label><input type="radio" value="Other" v-model="form.gender"> Other</label>
                         </div>
                     </div>
                     <div class="form_group">
                         <label for="reg_no">Car Reg. No.</label>
-                        <input required type="text" name="reg_no" id="reg_no">
+                        <input v-model="form.reg_no" required type="text" id="reg_no">
                     </div>
                     <div class="form_group">
                         <label for="city">City</label>
-                        <input required type="text" name="city" id="city">
+                        <input v-model="form.city" required type="text" id="city">
                     </div>
                     <div class="form_group">
                         <label for="state">State</label>
-                        <input required type="text" name="state" id="state">
+                        <input v-model="form.state" required type="text" id="state">
                     </div>
                 </div>
             </div>
@@ -83,7 +86,7 @@
             <button type="submit">Register</button>
 
             <div class="switch-login">
-                <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
+                <p>Already have an account? <a href="/login">Login</a></p>
             </div>
         </form>
     </div>
@@ -94,6 +97,7 @@
     </div>
 </div>
 
-<!-- Optional JS -->
+<!-- Vue CDN -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="{{ url_for('static', filename='js/register.js') }}"></script>
 {% endblock %}
