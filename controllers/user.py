@@ -20,18 +20,60 @@ def find_parking():
 @user.route('/user/find_parking_data')
 def find_parking_data():
     parking_lots = ParkingLot.query.all()
+    user_id = session.get('user_id')
     result = []
+
     for lot in parking_lots:
+        has_booked = False
+        if user_id:
+            has_booked = Booking.query.filter_by(
+                customer_id=user_id,
+                parking_lot_id=lot.id
+            ).first() is not None
+
         result.append({
             'id': lot.id,
             'name': lot.name,
             'address': lot.address,
-            'available': lot.capacity-lot.occupied,
+            'capacity': lot.capacity,
+            'occupied': lot.occupied,
             'price': lot.price,
-            'date_of_registration': lot.date_of_registration.strftime('%Y-%m-%d')
+            'date_of_registration': lot.date_of_registration.strftime('%Y-%m-%d'),
+            'requested': has_booked
         })
+
     return jsonify(result)
 
+@user.route('/user/book_spot', methods=['POST'])
+def book_spot():
+    data = request.get_json()
+    lot_id = data.get('lot_id')
+
+    lot = ParkingLot.query.get(lot_id)
+    if not lot:
+        return jsonify({'success': False, 'message': 'Parking lot not found'})
+
+    available = lot.capacity - lot.occupied
+    if available <= 0:
+        return jsonify({'success': False, 'message': 'No spots available'})
+
+    # Calculate slot_id as next available (1-indexed)
+    next_slot = lot.occupied + 1
+
+    # Create the booking
+    booking = Booking(
+        customer_id=session['user_id'],
+        parking_lot_id=lot.id,
+        slot_id=next_slot,
+        status='Requested',
+        date_booked=datetime.utcnow()
+    )
+
+    lot.occupied += 1
+    db.session.add(booking)
+    db.session.commit()
+
+    return jsonify({'success': True, 'message': f'Booking successful. Slot ID: {next_slot}'})
 
 @user.route('/user/bookings')
 def bookings():

@@ -29,6 +29,7 @@ class Booking(db.Model):
     customer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     parking_lot_id = db.Column(db.Integer, db.ForeignKey('parking_lot.id'), nullable=False)
     status = db.Column(db.String(20), default='Requested')
+    slot_id = db.Column(db.Integer)
     date_booked = db.Column(db.DateTime, default=datetime.utcnow)
 
     user = db.relationship('User', backref='bookings')

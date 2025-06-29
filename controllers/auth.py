@@ -32,6 +32,7 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 session.permanent = True
+                session['user_id']=user.id
                 session['role'] = user.role
                 session['username'] = user.username
                 session['email'] = user.email
