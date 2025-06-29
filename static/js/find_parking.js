@@ -7,9 +7,7 @@ new Vue({
   },
   methods: {
     bookspot(lot) {
-      if (lot.available <= 0 || lot.requested) {
-        return;
-      }
+      if (lot.available <= 0 || lot.requested) return;
 
       if (!confirm(`Confirm booking at "${lot.name}"?`)) return;
 
@@ -20,20 +18,46 @@ new Vue({
         },
         body: JSON.stringify({ lot_id: lot.id })
       })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          alert("Booking confirmed!");
-          lot.available -= 1;        // ✅ Update count
-          lot.requested = true;     // ✅ Mark as booked
-        } else {
-          alert(data.message || "Booking failed.");
-        }
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert("Booking confirmed!");
+            lot.available -= 1;
+            lot.requested = true;
+          } else {
+            alert(data.message || "Booking failed.");
+          }
+        })
+        .catch(err => {
+          console.error("Error booking spot:", err);
+          alert("Something went wrong.");
+        });
+    },
+
+    cancelBooking(lot) {
+      if (!confirm(`Cancel your booking at "${lot.name}"?`)) return;
+
+      fetch("/user/cancel_booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ lot_id: lot.id })
       })
-      .catch(err => {
-        console.error("Error booking spot:", err);
-        alert("Something went wrong.");
-      });
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert("Booking canceled.");
+            lot.available += 1;
+            lot.requested = false;
+          } else {
+            alert(data.message || "Cancellation failed.");
+          }
+        })
+        .catch(err => {
+          console.error("Error cancelling booking:", err);
+          alert("Something went wrong.");
+        });
     }
   },
   computed: {

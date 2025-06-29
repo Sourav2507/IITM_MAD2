@@ -13,6 +13,12 @@ def user_db():
     user = User.query.filter_by(username=session['username']).first()
     return render_template('customer_db.html')
 
+
+
+
+
+#Booking a Parking lot for customers
+
 @user.route('/user/find_parking')
 def find_parking():
     return render_template('find_parking.html')
@@ -74,6 +80,44 @@ def book_spot():
     db.session.commit()
 
     return jsonify({'success': True, 'message': f'Booking successful. Slot ID: {next_slot}'})
+
+@user.route('/user/cancel_booking', methods=['POST'])
+def cancel_booking():
+    if 'user_id' not in session:
+        return jsonify({"success": False, "message": "Unauthorized"}), 401
+
+    data = request.get_json()
+    lot_id = data.get('lot_id')
+
+    if not lot_id:
+        return jsonify({"success": False, "message": "Invalid request"}), 400
+
+    user_id = session['user_id']
+
+    # Find the booking
+    booking = Booking.query.filter_by(customer_id=user_id, parking_lot_id=lot_id).first()
+
+    if not booking:
+        return jsonify({"success": False, "message": "Booking not found"}), 404
+
+    try:
+        # Decrease occupied count
+        parking_lot = ParkingLot.query.get(lot_id)
+        if parking_lot.occupied > 0:
+            parking_lot.occupied -= 1
+
+        # Delete the booking
+        db.session.delete(booking)
+        db.session.commit()
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "message": str(e)}), 500
+
+
+
 
 @user.route('/user/bookings')
 def bookings():

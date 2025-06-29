@@ -37,11 +37,19 @@
                 </span>
 
                 <div class="mt-3">
-                    <button class="btn fw-bold px-4" :class="lot.requested ? 'btn-secondary' : 'btn-info text-dark'"
+                    <!-- Book Button -->
+                    <button class="btn fw-bold px-4 me-2"
+                        :class="lot.requested ? 'btn-secondary' : 'btn-info text-dark'"
                         :disabled="lot.requested || lot.available <= 0" v-on:click="bookspot(lot)">
                         ${ lot.requested ? 'Requested' : 'Book a Spot' }
                     </button>
+
+                    <!-- Cancel Button -->
+                    <button v-if="lot.requested" class="btn btn-danger fw-bold px-4" @click="cancelBooking(lot)">
+                        Cancel Booking
+                    </button>
                 </div>
+
             </div>
 
             <div class="col-md-4">
