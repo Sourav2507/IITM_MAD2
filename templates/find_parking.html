@@ -38,7 +38,7 @@
 
                 <div class="mt-3">
                     <button class="btn fw-bold px-4" :class="lot.requested ? 'btn-secondary' : 'btn-info text-dark'"
-                        :disabled="lot.requested || lot.available <= 0" @click="bookspot(lot)">
+                        :disabled="lot.requested || lot.available <= 0" v-on:click="bookspot(lot)">
                         ${ lot.requested ? 'Requested' : 'Book a Spot' }
                     </button>
                 </div>
