@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime,timedelta
 from models import db
 from models.customers import User  
 
@@ -31,6 +31,9 @@ class Booking(db.Model):
     status = db.Column(db.String(20), default='Requested')
     slot_id = db.Column(db.Integer)
     date_booked = db.Column(db.DateTime, default=datetime.utcnow)
+    start_time = db.Column(db.DateTime, nullable=False)
+    end_time = db.Column(db.DateTime, nullable=False)
+    parking_date = db.Column(db.Date, nullable=False)
 
     user = db.relationship('User', backref='bookings')
     parking_lot = db.relationship('ParkingLot', backref='bookings')

@@ -31,11 +31,13 @@ def find_parking_data():
 
     for lot in parking_lots:
         has_booked = False
+        booking = None
+
         if user_id:
-            has_booked = Booking.query.filter_by(
+            booking = Booking.query.filter_by(
                 customer_id=user_id,
                 parking_lot_id=lot.id
-            ).first() is not None
+            ).first()
 
         result.append({
             'id': lot.id,
@@ -45,10 +47,13 @@ def find_parking_data():
             'occupied': lot.occupied,
             'price': lot.price,
             'date_of_registration': lot.date_of_registration.strftime('%Y-%m-%d'),
-            'requested': has_booked
+            'requested': booking is not None,
+            'start_time': booking.start_time.isoformat() if booking else None,
+            'end_time': booking.end_time.isoformat() if booking else None
         })
 
     return jsonify(result)
+
 
 @user.route('/user/book_spot', methods=['POST'])
 def book_spot():
@@ -57,6 +62,18 @@ def book_spot():
 
     data = request.get_json()
     lot_id = data.get('lot_id')
+    start_time_str = data.get('start_time')
+    end_time_str = data.get('end_time')
+
+    if not lot_id or not start_time_str or not end_time_str:
+        return jsonify({'success': False, 'message': 'Missing booking time'}), 400
+
+    try:
+        start_time = datetime.fromisoformat(start_time_str)
+        end_time = datetime.fromisoformat(end_time_str)
+        parking_date = start_time.date()
+    except ValueError:
+        return jsonify({'success': False, 'message': 'Invalid date format'}), 400
 
     lot = ParkingLot.query.get(lot_id)
     if not lot:
@@ -66,38 +83,37 @@ def book_spot():
     if available <= 0:
         return jsonify({'success': False, 'message': 'No spots available'})
 
-    # ✅ Get all used slot IDs for this lot
+    # Find used slots
     used_slots = db.session.query(Booking.slot_id).filter_by(
         parking_lot_id=lot_id,
         status='Requested'
     ).all()
-
     used_slot_ids = set(slot[0] for slot in used_slots)
 
-    # ✅ Find the first free slot
-    available_slot = None
-    for i in range(1, lot.capacity + 1):
-        if i not in used_slot_ids:
-            available_slot = i
-            break
-
+    # Find first available slot
+    available_slot = next((i for i in range(1, lot.capacity + 1) if i not in used_slot_ids), None)
     if available_slot is None:
-        return jsonify({'success': False, 'message': 'No slots available'})
+        return jsonify({'success': False, 'message': 'No slots free'})
 
-    # ✅ Create new booking
+    # Create new booking
     booking = Booking(
         customer_id=session['user_id'],
         parking_lot_id=lot.id,
         slot_id=available_slot,
         status='Requested',
-        date_booked=datetime.utcnow()
+        date_booked=datetime.utcnow(),
+        start_time=start_time,
+        end_time=end_time,
+        parking_date=parking_date
     )
 
     lot.occupied += 1
     db.session.add(booking)
     db.session.commit()
 
-    return jsonify({'success': True, 'message': f'Booking successful. Slot ID: {available_slot}'})
+    return jsonify({'success': True, 'message': 'Booking successful', 'slot': available_slot})
+
+
 
 @user.route('/user/cancel_booking', methods=['POST'])
 def cancel_booking():
@@ -112,7 +128,12 @@ def cancel_booking():
 
     user_id = session['user_id']
 
-    booking = Booking.query.filter_by(customer_id=user_id, parking_lot_id=lot_id).first()
+    # Only cancel the active requested booking
+    booking = Booking.query.filter_by(
+        customer_id=user_id,
+        parking_lot_id=lot_id,
+        status='Requested'
+    ).first()
 
     if not booking:
         return jsonify({"success": False, "message": "Booking not found"}), 404
@@ -130,6 +151,7 @@ def cancel_booking():
     except Exception as e:
         db.session.rollback()
         return jsonify({"success": False, "message": str(e)}), 500
+
 
 
 

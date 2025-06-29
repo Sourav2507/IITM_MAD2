@@ -7,16 +7,21 @@ new Vue({
   },
   methods: {
     bookspot(lot) {
-      if (lot.available <= 0 || lot.requested) return;
+      if (!lot.selectedStartTime || !lot.selectedEndTime) {
+        alert("Please select both start and end times.");
+        return;
+      }
 
-      if (!confirm(`Confirm booking at "${lot.name}"?`)) return;
+      const payload = {
+        lot_id: lot.id,
+        start_time: lot.selectedStartTime,
+        end_time: lot.selectedEndTime
+      };
 
       fetch("/user/book_spot", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ lot_id: lot.id })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
       })
         .then(res => res.json())
         .then(data => {
@@ -24,16 +29,17 @@ new Vue({
             alert("Booking confirmed!");
             lot.available -= 1;
             lot.requested = true;
+            lot.start_time = lot.selectedStartTime;
+            lot.end_time = lot.selectedEndTime;
           } else {
             alert(data.message || "Booking failed.");
           }
         })
         .catch(err => {
-          console.error("Error booking spot:", err);
+          console.error("Error booking:", err);
           alert("Something went wrong.");
         });
     },
-
     cancelBooking(lot) {
       if (!confirm(`Cancel your booking at "${lot.name}"?`)) return;
 
@@ -50,6 +56,10 @@ new Vue({
             alert("Booking canceled.");
             lot.available += 1;
             lot.requested = false;
+            lot.start_time = null;
+            lot.end_time = null;
+            lot.selectedStartTime = "";
+            lot.selectedEndTime = "";
           } else {
             alert(data.message || "Cancellation failed.");
           }
@@ -59,6 +69,8 @@ new Vue({
           alert("Something went wrong.");
         });
     }
+
+
   },
   computed: {
     filteredLots() {
@@ -76,10 +88,14 @@ new Vue({
       .then(data => {
         this.parkingLots = data.map(lot => ({
           ...lot,
-          available: Number(lot.capacity) - Number(lot.occupied),  // ✅ Fix NaN
-          requested: lot.requested || false                        // ✅ Use backend flag
+          available: Number(lot.capacity) - Number(lot.occupied),
+          requested: lot.requested || false,
+          selectedStartTime: "", // 👈 for input
+          selectedEndTime: "",   // 👈 for input
+          start_time: lot.start_time || null,
+          end_time: lot.end_time || null
         }));
       })
-      .catch(err => console.error("Error fetching parking data:", err));
+      .catch(err => console.error("Error loading parking data:", err));
   }
 });

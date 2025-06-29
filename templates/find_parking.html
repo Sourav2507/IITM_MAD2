@@ -31,25 +31,47 @@
             <div class="col-md-8 p-3">
                 <h5 class="fw-bold mb-1">${ lot.name }</h5>
                 <p class="text-muted mb-2">${ lot.address }</p>
-
                 <span class="badge bg-light text-dark px-3 py-2 fw-medium">
                     Available: ${ lot.available }
                 </span>
 
                 <div class="mt-3">
-                    <!-- Book Button -->
-                    <button class="btn fw-bold px-4 me-2"
-                        :class="lot.requested ? 'btn-secondary' : 'btn-info text-dark'"
-                        :disabled="lot.requested || lot.available <= 0" v-on:click="bookspot(lot)">
-                        ${ lot.requested ? 'Requested' : 'Book a Spot' }
-                    </button>
+                    <!-- Start Time -->
+                    <label class="form-label mt-2 mb-1">Start Time:</label>
+                    <input type="datetime-local" v-model="lot.selectedStartTime"
+                        class="form-control w-auto d-inline-block me-2" :disabled="lot.requested" />
 
-                    <!-- Cancel Button -->
-                    <button v-if="lot.requested" class="btn btn-danger fw-bold px-4" @click="cancelBooking(lot)">
-                        Cancel Booking
-                    </button>
+                    <!-- End Time -->
+                    <label class="form-label mt-2 mb-1">End Time:</label>
+                    <input type="datetime-local" v-model="lot.selectedEndTime"
+                        class="form-control w-auto d-inline-block" :min="lot.selectedStartTime"
+                        :disabled="lot.requested" />
+
+                    <!-- Book Button -->
+                    <div class="mt-3">
+                        <button class="btn fw-bold px-4 me-2"
+                            :class="lot.requested ? 'btn-secondary' : 'btn-info text-dark'"
+                            :disabled="lot.requested || lot.available <= 0 || !lot.selectedStartTime || !lot.selectedEndTime"
+                            @click="bookspot(lot)">
+                            ${ lot.requested ? 'Requested' : 'Book a Spot' }
+                        </button>
+
+                        <!-- Cancel Button -->
+                        <button v-if="lot.requested" class="btn btn-danger fw-bold px-4" @click="cancelBooking(lot)">
+                            Cancel Booking
+                        </button>
+                    </div>
                 </div>
 
+                <!-- Display Booked Times -->
+                <div v-if="lot.requested && lot.start_time && lot.end_time" class="mt-3">
+                    <p class="mb-1 text-muted">
+                        <strong>From:</strong> ${ new Date(lot.start_time).toLocaleString() }
+                    </p>
+                    <p class="mb-0 text-muted">
+                        <strong>To:</strong> ${ new Date(lot.end_time).toLocaleString() }
+                    </p>
+                </div>
             </div>
 
             <div class="col-md-4">
@@ -60,6 +82,9 @@
             </div>
         </div>
     </div>
+
+
+
 
     <p v-if="filteredLots.length === 0" class="text-muted">No results found.</p>
 
