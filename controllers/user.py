@@ -26,7 +26,7 @@ def find_parking_data():
             'id': lot.id,
             'name': lot.name,
             'address': lot.address,
-            'capacity': lot.capacity,
+            'available': lot.capacity-lot.occupied,
             'price': lot.price,
             'date_of_registration': lot.date_of_registration.strftime('%Y-%m-%d')
         })

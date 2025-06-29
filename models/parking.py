@@ -7,6 +7,7 @@ class ParkingLot(db.Model):
     name = db.Column(db.String(50), nullable=False)
     address = db.Column(db.String(200), nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
+    occupied = db.Column(db.Integer,default=0)
     date_of_registration = db.Column(db.Date, default=datetime.utcnow)
     price = db.Column(db.Integer, nullable=False)
 

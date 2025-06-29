@@ -31,7 +31,9 @@
             <div class="col-md-8 p-3">
                 <h5 class="fw-bold mb-1">${ lot.name }</h5>
                 <p class="text-muted mb-2">${ lot.address }</p>
-                <span class="badge bg-light text-dark px-3 py-2 fw-medium">Capacity: ${ lot.capacity }</span>
+                <span class="badge bg-light text-dark px-3 py-2 fw-medium">Available : ${ lot.available }</span>
+                
+        <button class="btn btn-info text-dark fw-bold px-4">Book a Spot</button>
             </div>
             <div class="col-md-4">
                 <div class="ratio ratio-16x9 rounded overflow-hidden">
@@ -46,7 +48,6 @@
     <!-- Quick Actions -->
     <h4 class="fw-bold text-dark mt-5 mb-3">Quick Actions</h4>
     <div class="d-flex flex-wrap gap-3 mb-3">
-        <button class="btn btn-info text-dark fw-bold px-4">Book a Spot</button>
         <button class="btn btn-outline-secondary fw-bold px-4">View My Bookings</button>
     </div>
     <button class="btn btn-outline-secondary fw-bold w-100">Make a Payment</button>
