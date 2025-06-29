@@ -33,7 +33,6 @@ class Booking(db.Model):
     date_booked = db.Column(db.DateTime, default=datetime.utcnow)
     start_time = db.Column(db.DateTime, nullable=False)
     end_time = db.Column(db.DateTime, nullable=False)
-    parking_date = db.Column(db.Date, nullable=False)
 
     user = db.relationship('User', backref='bookings')
     parking_lot = db.relationship('ParkingLot', backref='bookings')

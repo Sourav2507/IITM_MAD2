@@ -71,7 +71,6 @@ def book_spot():
     try:
         start_time = datetime.fromisoformat(start_time_str)
         end_time = datetime.fromisoformat(end_time_str)
-        parking_date = start_time.date()
     except ValueError:
         return jsonify({'success': False, 'message': 'Invalid date format'}), 400
 
@@ -104,7 +103,6 @@ def book_spot():
         date_booked=datetime.utcnow(),
         start_time=start_time,
         end_time=end_time,
-        parking_date=parking_date
     )
 
     lot.occupied += 1
