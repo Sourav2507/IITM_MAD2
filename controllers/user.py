@@ -52,6 +52,9 @@ def find_parking_data():
 
 @user.route('/user/book_spot', methods=['POST'])
 def book_spot():
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'}), 401
+
     data = request.get_json()
     lot_id = data.get('lot_id')
 
@@ -63,14 +66,29 @@ def book_spot():
     if available <= 0:
         return jsonify({'success': False, 'message': 'No spots available'})
 
-    # Calculate slot_id as next available (1-indexed)
-    next_slot = lot.occupied + 1
+    # ✅ Get all used slot IDs for this lot
+    used_slots = db.session.query(Booking.slot_id).filter_by(
+        parking_lot_id=lot_id,
+        status='Requested'
+    ).all()
 
-    # Create the booking
+    used_slot_ids = set(slot[0] for slot in used_slots)
+
+    # ✅ Find the first free slot
+    available_slot = None
+    for i in range(1, lot.capacity + 1):
+        if i not in used_slot_ids:
+            available_slot = i
+            break
+
+    if available_slot is None:
+        return jsonify({'success': False, 'message': 'No slots available'})
+
+    # ✅ Create new booking
     booking = Booking(
         customer_id=session['user_id'],
         parking_lot_id=lot.id,
-        slot_id=next_slot,
+        slot_id=available_slot,
         status='Requested',
         date_booked=datetime.utcnow()
     )
@@ -79,7 +97,7 @@ def book_spot():
     db.session.add(booking)
     db.session.commit()
 
-    return jsonify({'success': True, 'message': f'Booking successful. Slot ID: {next_slot}'})
+    return jsonify({'success': True, 'message': f'Booking successful. Slot ID: {available_slot}'})
 
 @user.route('/user/cancel_booking', methods=['POST'])
 def cancel_booking():
@@ -94,19 +112,16 @@ def cancel_booking():
 
     user_id = session['user_id']
 
-    # Find the booking
     booking = Booking.query.filter_by(customer_id=user_id, parking_lot_id=lot_id).first()
 
     if not booking:
         return jsonify({"success": False, "message": "Booking not found"}), 404
 
     try:
-        # Decrease occupied count
         parking_lot = ParkingLot.query.get(lot_id)
         if parking_lot.occupied > 0:
             parking_lot.occupied -= 1
 
-        # Delete the booking
         db.session.delete(booking)
         db.session.commit()
 
@@ -135,13 +150,9 @@ def help_and_support():
 def notifications():
     return render_template('notifications.html')
 
-# @user.route('/user/<id>')
-# def user_by_id(id):
-#     print("User ID requested:", id)
-#     print("User ID requested:", id)
-#     import traceback
-#     traceback.print_stack()
-#     return redirect(url_for('auth.login'))
+
+
+#Profile Section
 
 @user.route('/user/profile')
 def profile():
@@ -158,7 +169,6 @@ def handle_user_data():
         return jsonify(error="User not found"), 404
 
     if request.method == "GET":
-        # Return profile data
         return jsonify({
             "fname": user.fname,
             "lname": user.lname,
@@ -173,7 +183,6 @@ def handle_user_data():
         })
 
     elif request.method == "POST":
-        # Update profile data
         data = request.get_json()
 
         user.fname = data.get("fname", user.fname)
@@ -200,18 +209,16 @@ def upload_image():
         return jsonify({"error": "No selected file"}), 400
 
     filename = secure_filename(f"{username}.png")
-    folder_path = os.path.join("static", "images")  # 🟢 Fix here
+    folder_path = os.path.join("static", "images")
 
-    # ✅ Create directory if it doesn't exist
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
 
     filepath = os.path.join(folder_path, filename)
     file.save(filepath)
 
-    # Update database path (relative)
     user = User.query.filter_by(username=username).first()
-    user.profile_image = f"images/{filename}"  # just the relative path
+    user.profile_image = f"images/{filename}"
     db.session.commit()
 
     return jsonify({

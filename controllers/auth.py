@@ -103,6 +103,7 @@ def register():
 
         # Login after register
         session.permanent = True
+        session['user_id']=user.id
         session['username'] = username
         session['email'] = email
         session['role'] = 'user'
