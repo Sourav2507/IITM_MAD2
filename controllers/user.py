@@ -111,8 +111,6 @@ def book_spot():
 
     return jsonify({'success': True, 'message': 'Booking successful', 'slot': available_slot})
 
-
-
 @user.route('/user/cancel_booking', methods=['POST'])
 def cancel_booking():
     if 'user_id' not in session:
@@ -157,6 +155,60 @@ def cancel_booking():
 @user.route('/user/bookings')
 def bookings():
     return render_template('bookings.html')
+
+@user.route('/user/my_bookings')
+def my_bookings():
+    if 'user_id' not in session:
+        return jsonify({"success": False, "message": "Unauthorized"}), 401
+
+    user_id = session['user_id']
+    now = datetime.utcnow()
+
+    bookings = (
+        Booking.query
+        .filter_by(customer_id=user_id)
+        .join(ParkingLot)
+        .add_entity(ParkingLot)
+        .order_by(Booking.start_time.asc())
+        .all()
+    )
+
+    upcoming = []
+    past = []
+
+    for booking, lot in bookings:
+        data = {
+            'id': booking.id,
+            'location': lot.name,
+            'address': lot.address,
+            'start_time': booking.start_time.isoformat(),
+            'end_time': booking.end_time.isoformat(),
+            'status': booking.status
+        }
+        if booking.end_time >= now:
+            upcoming.append(data)
+        else:
+            past.append(data)
+
+    return jsonify({"success": True, "upcoming": upcoming, "past": past})
+
+@user.route('/user/cancel_existing_booking/<int:booking_id>', methods=['POST'])
+def cancel_existing_booking(booking_id):
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Unauthorized'}), 401
+
+    booking = Booking.query.filter_by(id=booking_id, customer_id=session['user_id']).first()
+
+    if not booking:
+        return jsonify({'success': False, 'message': 'Booking not found'}), 404
+
+    db.session.delete(booking)
+    db.session.commit()
+
+    return jsonify({'success': True, 'message': 'Booking deleted successfully'})
+
+
+
 
 @user.route('/user/payments')
 def payments():
